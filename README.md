@@ -1,2 +1,2 @@
 # DBSubmit
-Submit script for jobs stored in a database
+Submit script for jobs stored in a database.
