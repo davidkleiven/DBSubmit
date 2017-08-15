@@ -122,7 +122,7 @@ def main( argv ):
             of.write('export GPAW_SETUP_PATH="/home/ntnu/davidkl/GPAW/gpawData/gpaw-setups-0.9.20000"\n')
             of.write('export PATH=${PATH}:"/home/ntnu/davidkl/.local/bin"\n')
             of.write( "cd %s\n"%(arguments["workdir"]) )
-            of.write( "mpirun -np %d gpaw-python %s/%s %d\n"%(arguments["nodes"]*arguments["nproc"], arguments["workdir"], arguments["gpawmain"], runID) )
+            of.write( "mpirun -np %d gpaw-python %s %d\n"%(arguments["nodes"]*arguments["nproc"], arguments["gpawmain"], runID) )
 
         subprocess.call( ["qsub", scriptname] )
         con = sq.connect( arguments["dbname"] )
