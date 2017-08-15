@@ -1,6 +1,8 @@
 import sys
+import subprocess
 import sqlite3 as sq
 import random as rnd
+import json
 
 def main( argv ):
     """
@@ -8,12 +10,20 @@ def main( argv ):
     The job is submitted to the cluster and the status field is changed to 'submitted'
 
     All the arguments in the 'arguments' dictionary below should be given.
-    Put -- in front of each name and = after (with no whitespaces)7
+    Put -- in front of each name and = after (with no whitespaces)
 
     Example:
     python gpawsubmit.py --projID=nn1204ub --name=myjob --walltime=01:12:01 --nodes=2 --nproc=16
     --dbname=/path/to/sql/database.db --dbtable=parameters --workdir=/path/to/where/outputfiles
     --gpawmain=/path/to/the/gpaw/script.py
+
+    Alternatively the paramters can be read from a json file.
+    This is useful if you are using the same paramters for many runs
+
+    Example:
+    python gpawsubmit.py --file=params.json
+
+    An example of such file can be found in params.json
 
     Parameters:
     -------------
@@ -43,29 +53,35 @@ def main( argv ):
         "gpawmain":None
     }
 
-    for arg in argv:
-        if ( arg.find("--projID=") != -1 ):
-            arguments["projID"] = arg.split( "--projID=" )[1]
-        elif ( arg.find("--name=") != -1 ):
-            arguments["name"] = arg.split("--name=" )[1]
-        elif ( arg.find("--walltime=") != -1 ):
-            arguments["walltime"] = arg.split("--walltime=" )[1]
-        elif ( arg.find("--nodes=") != -1 ):
-            arguments["nodes"] = int( arg.split( "--nodes=" )[1] )
-        elif ( arg.find("--nproc=") != -1 ):
-            arguments["nproc"] = int( arg.split( "--nproc=" )[1] )
-        elif ( arg.find("--dbname") != -1 ):
-            arguments["dbname"] = arg.split( "--dbname=" )[1]
-        elif ( arg.find("--dbtable=") != -1 ):
-            arguments["dbtable"] = arg.split( "--dbtable=" )[1]
-        elif ( arg.find("--workdir") != -1 ):
-            arguments["workdir"] = arg.split("--workdir=")[1]
-        elif ( arg.find("--gpawmain=") != -1 ):
-            arguments["gpawmain"] = arg.split("--gpawmain=")[1]
-        elif ( arg.find("-h") or arg.find("--help") ):
-            print ("Required arguments:")
-            print (arguments)
-            return
+    if ( len(argv) == 1 and argv[0].find("--file=") != -1 ):
+        # Read parameters from file
+        fname = argv[0].split("--file=")[1]
+        with open( fname, 'r' ) as infile:
+            arguments = json.load( infile )
+    else:
+        for arg in argv:
+            if ( arg.find("--projID=") != -1 ):
+                arguments["projID"] = arg.split( "--projID=" )[1]
+            elif ( arg.find("--name=") != -1 ):
+                arguments["name"] = arg.split("--name=" )[1]
+            elif ( arg.find("--walltime=") != -1 ):
+                arguments["walltime"] = arg.split("--walltime=" )[1]
+            elif ( arg.find("--nodes=") != -1 ):
+                arguments["nodes"] = int( arg.split( "--nodes=" )[1] )
+            elif ( arg.find("--nproc=") != -1 ):
+                arguments["nproc"] = int( arg.split( "--nproc=" )[1] )
+            elif ( arg.find("--dbname") != -1 ):
+                arguments["dbname"] = arg.split( "--dbname=" )[1]
+            elif ( arg.find("--dbtable=") != -1 ):
+                arguments["dbtable"] = arg.split( "--dbtable=" )[1]
+            elif ( arg.find("--workdir") != -1 ):
+                arguments["workdir"] = arg.split("--workdir=")[1]
+            elif ( arg.find("--gpawmain=") != -1 ):
+                arguments["gpawmain"] = arg.split("--gpawmain=")[1]
+            elif ( arg.find("-h") or arg.find("--help") ):
+                print ("Required arguments:")
+                print (arguments)
+                return
 
     # Create the submission script
     if ( arguments["workdir"] is None ):

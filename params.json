@@ -1,0 +1,11 @@
+{
+  "projID":"somename",
+  "name":"noname",
+  "walltime":"00:00:00",
+  "nodes":1,
+  "nproc":1,
+  "dbname":"example.db",
+  "dbtable":"runs",
+  "workdir":"/home/dkleiven/Documents/DBSubmit",
+  "gpawmain":"somescript.py"
+}
