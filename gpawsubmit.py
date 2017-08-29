@@ -117,7 +117,6 @@ def main( argv ):
 
             # Export paths
             of.write("module load python\n")
-            of.write("export GPAW_FFTWSO=''\n")
             of.write('export LD_LIBRARY_PATH="/usr/lib64":"/home/ntnu/davidkl/.local/lib":${LD_LIBRARY_PATH}\n')
             of.write('export GPAW_SETUP_PATH="/home/ntnu/davidkl/GPAW/gpawData/gpaw-setups-0.9.20000"\n')
             of.write('export PATH=${PATH}:"/home/ntnu/davidkl/.local/bin"\n')
