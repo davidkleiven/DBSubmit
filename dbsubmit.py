@@ -15,7 +15,7 @@ def main( argv ):
     Example:
     python gpawsubmit.py --projID=nn1204ub --name=myjob --walltime=01:12:01 --nodes=2 --nproc=16
     --dbname=/path/to/sql/database.db --dbtable=parameters --workdir=/path/to/where/outputfiles
-    --gpawmain=/path/to/the/gpaw/script.py
+    --main=/path/to/the/gpaw/script.py --command=python
 
     Alternatively the paramters can be read from a json file.
     This is useful if you are using the same paramters for many runs
@@ -35,7 +35,8 @@ def main( argv ):
     dbname: Name of the database where the parameters are stored
     dbtable: Table in the database where the parameters are stored
     workdir: Working directory. The submit script and the output files will be put here
-    gpawmain: GPAW script to run
+    main: GPAW script to run
+    command: Executable command, default: python, for GPAW it should be gpaw-python
 
     NOTE: The database should have a field named status and one named ID
           The IDs will be passed as command line argument to the GPAW script
@@ -50,7 +51,8 @@ def main( argv ):
         "dbname":None,
         "dbtable":None,
         "workdir":None,
-        "gpawmain":None
+        "main":None,
+        "command":"python"
     }
 
     if ( len(argv) == 1 and argv[0].find("--file=") != -1 ):
@@ -76,8 +78,10 @@ def main( argv ):
                 arguments["dbtable"] = arg.split( "--dbtable=" )[1]
             elif ( arg.find("--workdir") != -1 ):
                 arguments["workdir"] = arg.split("--workdir=")[1]
-            elif ( arg.find("--gpawmain=") != -1 ):
-                arguments["gpawmain"] = arg.split("--gpawmain=")[1]
+            elif ( arg.find("--main=") != -1 ):
+                arguments["main"] = arg.split("--main=")[1]
+            elif ( arg.find("--command=") != -1 ):
+                arguments["command"] = arg.split("--command=")[1]
             elif ( arg.find("-h") or arg.find("--help") ):
                 print ("Required arguments:")
                 print (arguments)
@@ -121,9 +125,9 @@ def main( argv ):
             of.write('export GPAW_SETUP_PATH="/home/ntnu/davidkl/GPAW/gpawData/gpaw-setups-0.9.20000"\n')
             of.write('export PATH=${PATH}:"/home/ntnu/davidkl/.local/bin"\n')
             of.write( "cd %s\n"%(arguments["workdir"]) )
-            of.write( "mpirun -np %d gpaw-python %s %d\n"%(arguments["nodes"]*arguments["nproc"], arguments["gpawmain"], runID) )
+            of.write( "mpirun -np %d %s %s %d\n"%(arguments["nodes"]*arguments["nproc"], arguments["command"], arguments["main"], runID) )
 
-        subprocess.call( ["qsub", scriptname] )
+        #subprocess.call( ["qsub", scriptname] )
         con = sq.connect( arguments["dbname"] )
         cur = con.cursor()
         print (arguments["dbtable"])
