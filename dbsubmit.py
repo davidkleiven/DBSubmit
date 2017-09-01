@@ -3,6 +3,7 @@ import subprocess
 import sqlite3 as sq
 import random as rnd
 import json
+import datetime
 
 def main( argv ):
     """
@@ -94,8 +95,6 @@ def main( argv ):
         print ( arguments )
         return
 
-    randID = rnd.randint(0,1000000)
-
     if ( arguments["dbname"] is None ):
         print ("No database given!")
         return
@@ -109,9 +108,10 @@ def main( argv ):
     ids = cur.fetchall()
     con.close()
 
+    timestamp = datetime.datetime.today().strftime( "%Y%m%d_%H%M%S")
     for i in range(len(ids)):
         runID = int( ids[i][0] )
-        scriptname = arguments["workdir"]+"/job%d.sh"%(runID)
+        scriptname = arguments["workdir"]+"/job_%s_%d.sh"%(timestamp,i)
         with open(scriptname, 'w') as of:
             of.write("#!/bin/bash\n")
             of.write("#PBS -N %s\n"%(arguments["name"]) )
@@ -127,7 +127,7 @@ def main( argv ):
             of.write( "cd %s\n"%(arguments["workdir"]) )
             of.write( "mpirun -np %d %s %s %d\n"%(arguments["nodes"]*arguments["nproc"], arguments["command"], arguments["main"], runID) )
 
-        subprocess.call( ["qsub", scriptname] )
+        #subprocess.call( ["qsub", scriptname] )
         con = sq.connect( arguments["dbname"] )
         cur = con.cursor()
         print (arguments["dbtable"])
