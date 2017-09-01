@@ -7,5 +7,6 @@
   "dbname":"example.db",
   "dbtable":"runs",
   "workdir":"/home/dkleiven/Documents/DBSubmit",
-  "gpawmain":"somescript.py"
+  "main":"somescript.py",
+  "command":"python"
 }
