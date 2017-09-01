@@ -127,7 +127,7 @@ def main( argv ):
             of.write( "cd %s\n"%(arguments["workdir"]) )
             of.write( "mpirun -np %d %s %s %d\n"%(arguments["nodes"]*arguments["nproc"], arguments["command"], arguments["main"], runID) )
 
-        #subprocess.call( ["qsub", scriptname] )
+        subprocess.call( ["qsub", scriptname] )
         con = sq.connect( arguments["dbname"] )
         cur = con.cursor()
         cur.execute( 'UPDATE %s SET status="submitted" WHERE ID=?'%(arguments["dbtable"]), (runID,))
