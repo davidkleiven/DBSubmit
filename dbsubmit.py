@@ -130,7 +130,6 @@ def main( argv ):
         #subprocess.call( ["qsub", scriptname] )
         con = sq.connect( arguments["dbname"] )
         cur = con.cursor()
-        print (arguments["dbtable"])
         cur.execute( 'UPDATE %s SET status="submitted" WHERE ID=?'%(arguments["dbtable"]), (runID,))
         con.commit()
         con.close()
