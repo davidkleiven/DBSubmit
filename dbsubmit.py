@@ -120,7 +120,8 @@ def main( argv ):
             of.write("#PBS -A %s\n"%(arguments["projID"]) )
 
             # Export paths
-            of.write("module load python\n")
+            of.write("module load intelcomp/17.0.0 mpt/2.14\n")
+            of.write("module load python/2.7.13\n")
             of.write('export LD_LIBRARY_PATH="/usr/lib64":"/home/ntnu/davidkl/.local/lib":${LD_LIBRARY_PATH}\n')
             of.write('export GPAW_SETUP_PATH="/home/ntnu/davidkl/GPAW/gpawData/gpaw-setups-0.9.20000"\n')
             of.write('export PATH=${PATH}:"/home/ntnu/davidkl/.local/bin"\n')
