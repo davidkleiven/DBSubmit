@@ -126,6 +126,7 @@ def main( argv ):
             of.write('export GPAW_SETUP_PATH="/home/ntnu/davidkl/GPAW/gpawData/gpaw-setups-0.9.20000"\n')
             of.write('export PATH=${PATH}:"/home/ntnu/davidkl/.local/bin"\n')
             of.write('export PYTHONPATH=${PYTHONPATH}:"/home/ntnu/davidkl/.local/lib/python2.7/site-packages/ase-3.15.0b1-py2.7.egg"\n')
+            of.write('export PYTHONPATH=${PYTHONPATH}:"/home/ntnu/davidkl/.local/lib/python2.7/site-packages/"\n')
             of.write( "cd %s\n"%(arguments["workdir"]) )
             of.write( "mpirun -np %d %s %s %d\n"%(arguments["nodes"]*arguments["nproc"], arguments["command"], arguments["main"], runID) )
 
