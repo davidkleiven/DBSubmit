@@ -15,7 +15,7 @@ class CommandLineArgParser(object):
             "nodes":1,
             "nproc":1,
             "dbname":None,
-            "dbtable":None,
+            "dbtable":"notUsed",
             "workdir":None,
             "main":None,
             "command":"python"
@@ -62,5 +62,3 @@ class CommandLineArgParser(object):
             raise ValueError("Working directory not given!")
         if ( self.arguments["dbname"] is None ):
             raise ValueError("Database not given!")
-        if ( self.arguments["dbtable"] is None ):
-            raise ValueError("No table in database given!")

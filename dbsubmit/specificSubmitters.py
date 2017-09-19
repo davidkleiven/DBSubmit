@@ -33,3 +33,37 @@ class SimpleStatusFieldSubmit(Submit):
         cur.execute( 'UPDATE %s SET status="%s" WHERE ID=?'%(self.args["dbtable"], self.states["qeuedJob"],), (jobID,))
         con.commit()
         con.close()
+
+try:
+    import ase.db
+except ImportError:
+    hasASE = False
+
+class ASEClusterExpansionSubmit(Submit):
+    """
+    Class that submits jobs susing ASE database in a similar way as the included Submit class
+    https://gitlab.com/jinchang/ase/blob/ClusterExpansion/ase/ce/job.py
+    """
+    def __init__( self, args ):
+        Submit.__init__(args)
+
+    def getJobIDs( self ):
+        """
+        Returns all the job IDs
+        """
+        if ( not hasASE ):
+            raise ImportError("Could not find ASE")
+
+        db = ase.db.connect( self.args["dbname"] )
+        condition = "queued=False, started=False"
+        ids = [row.id for row in db.select(condition)]
+        return ids
+
+    def updateDB( self, id ):
+        """
+        Sets the queued flag to True
+        """
+        if ( not hasASE ):
+            raise ImportError("Could not find ASE")
+        db = ase.db.connect( self.args["dbname"] )
+        db.update( ids, queued=True )
