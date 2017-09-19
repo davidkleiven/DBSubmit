@@ -1,3 +1,5 @@
+import datetime
+import subprocess
 
 class Submit(object):
     def __init__( self, arguments ):
@@ -41,8 +43,8 @@ class Submit(object):
                 of.write( "cd %s\n"%(self.args["workdir"]) )
                 of.write( "mpirun -np %d %s %s %d\n"%(self.args["nodes"]*self.args["nproc"], self.args["command"], self.args["main"], runID) )
 
-    def submit():
+    def submit( self ):
         self.generate()
-        for script,runID in zip(self.sciptnames,self.runIds):
-            subprocess.call( ["qsub", script] )
-            self.updateDB( jobID )
+        for script,runID in zip(self.scriptnames,self.runIds):
+            #subprocess.call( ["qsub", script] )
+            self.updateDB( runID )

@@ -6,7 +6,7 @@ class SimpleStatusFieldSubmit(Submit):
         Submit.__init__(self, args )
 
         self.states = {
-            "newjob":"new",
+            "newJob":"new",
             "qeuedJob":"submitted",
             "finishedJob":"finished"
         }
@@ -17,7 +17,7 @@ class SimpleStatusFieldSubmit(Submit):
         """
         con = sq.connect( self.args["dbname"] )
         cur = con.cursor()
-        cur.execute( "SELECT ID FROM %s WHERE status='%s'"%(self.states["new"], self.args["dbtable"]) )
+        cur.execute( "SELECT ID FROM %s WHERE status='%s'"%( self.args["dbtable"], self.states["newJob"],) )
         ids = cur.fetchall()
         con.close()
 
@@ -30,6 +30,6 @@ class SimpleStatusFieldSubmit(Submit):
         """
         con = sq.connect( self.args["dbname"] )
         cur = con.cursor()
-        cur.execute( 'UPDATE %s SET status="%s" WHERE ID=?'%(self.states["qeuedJob"], self.args["dbtable"]), (runID,))
+        cur.execute( 'UPDATE %s SET status="%s" WHERE ID=?'%(self.args["dbtable"], self.states["qeuedJob"],), (jobID,))
         con.commit()
         con.close()

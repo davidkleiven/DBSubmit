@@ -8,7 +8,7 @@ class CommandLineArgParser(object):
         argv: The sys.arg[1:] array
         """
         self.argv = argv
-        arguments = {
+        self.arguments = {
             "projID":None,
             "name":"noname",
             "walltime":"00:00:00",
@@ -51,7 +51,7 @@ class CommandLineArgParser(object):
                 self.arguments["command"] = arg.split("--command=")[1]
             elif ( arg.find("-h") or arg.find("--help") ):
                 print ("Required arguments:")
-                print (arguments)
+                print (self.arguments)
                 exit()
 
     def _checkRequired( self ):
