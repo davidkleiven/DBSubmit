@@ -10,7 +10,7 @@ class SimpleStatusFieldSubmit(Submit):
             "qeuedJob":"submitted",
             "finishedJob":"finished"
         }
-/home/ntnu/davidkl/GPAWTutorial/CE
+        
     def getJobIDs( self ):
         """
         Returns all job IDs of the new jobs
@@ -41,7 +41,7 @@ except ImportError:
     hasASE = False
 
 class ASEClusterExpansionSubmit(Submit):
-    """
+    """line
     Class that submits jobs susing ASE database in a similar way as the included Submit class
     https://gitlab.com/jinchang/ase/blob/ClusterExpansion/ase/ce/job.py
     """
