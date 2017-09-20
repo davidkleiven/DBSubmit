@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 from dbsubmit.commandParser import CommandLineArgParser
-from dbsubmit.specificSubmitters import ASE
+from dbsubmit.specificSubmitters import ASEClusterExpansionSubmit
 
 def main( argv ):
     parser = CommandLineArgParser( argv )
