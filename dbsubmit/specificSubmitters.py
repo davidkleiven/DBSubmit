@@ -10,7 +10,7 @@ class SimpleStatusFieldSubmit(Submit):
             "qeuedJob":"submitted",
             "finishedJob":"finished"
         }
-
+/home/ntnu/davidkl/GPAWTutorial/CE
     def getJobIDs( self ):
         """
         Returns all job IDs of the new jobs
@@ -67,4 +67,4 @@ class ASEClusterExpansionSubmit(Submit):
         if ( not hasASE ):
             raise ImportError("Could not find ASE")
         db = ase.db.connect( self.args["dbname"] )
-        db.update( ids, queued=True )
+        db.update( id, queued=True )
