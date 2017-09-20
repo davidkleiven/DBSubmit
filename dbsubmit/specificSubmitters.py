@@ -36,6 +36,7 @@ class SimpleStatusFieldSubmit(Submit):
 
 try:
     import ase.db
+    hasASE = True
 except ImportError:
     hasASE = False
 
