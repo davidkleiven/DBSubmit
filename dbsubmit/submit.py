@@ -46,5 +46,5 @@ class Submit(object):
     def submit( self ):
         self.generate()
         for script,runID in zip(self.scriptnames,self.runIds):
-            #subprocess.call( ["qsub", script] )
+            subprocess.call( ["qsub", script] )
             self.updateDB( runID )
