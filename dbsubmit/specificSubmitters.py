@@ -46,7 +46,7 @@ class ASEClusterExpansionSubmit(Submit):
     https://gitlab.com/jinchang/ase/blob/ClusterExpansion/ase/ce/job.py
     """
     def __init__( self, args ):
-        Submit.__init__(args)
+        Submit.__init__( self, args)
 
     def getJobIDs( self ):
         """
