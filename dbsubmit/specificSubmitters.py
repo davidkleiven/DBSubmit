@@ -10,7 +10,7 @@ class SimpleStatusFieldSubmit(Submit):
             "qeuedJob":"submitted",
             "finishedJob":"finished"
         }
-        
+
     def getJobIDs( self ):
         """
         Returns all job IDs of the new jobs
@@ -56,7 +56,12 @@ class ASEClusterExpansionSubmit(Submit):
             raise ImportError("Could not find ASE")
 
         db = ase.db.connect( self.args["dbname"] )
-        condition = "queued=False, started=False"
+        if ( "restart" in self.args.keys() ):
+            # Re-start an old simulation that was not converged
+            condition = "converged=False"
+        else:
+            # Run a new simulation
+            condition = "queued=False, started=False"
         ids = [row.id for row in db.select(condition)]
         return ids
 

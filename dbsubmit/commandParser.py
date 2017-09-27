@@ -53,6 +53,9 @@ class CommandLineArgParser(object):
                 print ("Required arguments:")
                 print (self.arguments)
                 exit()
+            else:
+                # Not a default argument put it will be appended to the argumentlist
+                self._parse_new_argument( arg )
 
     def _checkRequired( self ):
         """
@@ -62,3 +65,16 @@ class CommandLineArgParser(object):
             raise ValueError("Working directory not given!")
         if ( self.arguments["dbname"] is None ):
             raise ValueError("Database not given!")
+
+    def _parse_new_argument( arg ):
+        try:
+            # Remove double dash in the beginning
+            arg = str(arg)
+            arg = arg.replace("--","")
+            splitted = arg.split("=")
+            key = splitted[0]
+            value = splitted[1]
+            self.arguments[key] = value
+        except Exception as exc:
+            print ("Failed in parsing non default argument")
+            print ( str(exc) )
