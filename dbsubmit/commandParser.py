@@ -49,7 +49,7 @@ class CommandLineArgParser(object):
                 self.arguments["main"] = arg.split("--main=")[1]
             elif ( arg.find("--command=") != -1 ):
                 self.arguments["command"] = arg.split("--command=")[1]
-            elif ( arg.find("-h") or arg.find("--help") ):
+            elif ( arg.find("--help") != -1 ):
                 print ("Required arguments:")
                 print (self.arguments)
                 exit()
@@ -66,12 +66,16 @@ class CommandLineArgParser(object):
         if ( self.arguments["dbname"] is None ):
             raise ValueError("Database not given!")
 
-    def _parse_new_argument( arg ):
+    def _parse_new_argument( self, arg ):
         try:
             # Remove double dash in the beginning
             arg = str(arg)
             arg = arg.replace("--","")
+
+            # Split on the = sign
             splitted = arg.split("=")
+
+            # Value before the = sign is the key and after is the value
             key = splitted[0]
             value = splitted[1]
             self.arguments[key] = value
