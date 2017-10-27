@@ -46,7 +46,7 @@ class Submit(object):
     def submit( self ):
         self.generate()
 
-        if ( self.arguments["njobs"] == -1 ):
+        if ( self.args["njobs"] == -1 ):
             maxjobs = 100000
         else:
             maxjobs = self.args["njobs"]
