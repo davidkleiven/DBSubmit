@@ -50,11 +50,10 @@ class Submit(object):
             maxjobs = 100000
         else:
             maxjobs = self.args["njobs"]
-
         number_submitted = 0
         for script,runID in zip(self.scriptnames,self.runIds):
             if ( number_submitted >= maxjobs ):
-                break
+                return
             subprocess.call( ["qsub", script] )
             self.updateDB( runID )
             number_submitted += 1
