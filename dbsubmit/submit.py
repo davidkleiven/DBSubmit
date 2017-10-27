@@ -49,7 +49,7 @@ class Submit(object):
         if ( self.args["njobs"] == -1 ):
             maxjobs = 100000
         else:
-            maxjobs = self.args["njobs"]
+            maxjobs = int( self.args["njobs"] )
         number_submitted = 0
         print ("Starting maximum: %d jobs"%(maxjobs))
         for script,runID in zip(self.scriptnames,self.runIds):
