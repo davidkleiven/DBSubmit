@@ -49,7 +49,7 @@ class Submit(object):
         if ( self.arguments["njobs"] == -1 ):
             maxjobs = 100000
         else:
-            maxjobs = self.arguments["njobs"]
+            maxjobs = self.args["njobs"]
 
         number_submitted = 0
         for script,runID in zip(self.scriptnames,self.runIds):
