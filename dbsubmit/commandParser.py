@@ -18,7 +18,8 @@ class CommandLineArgParser(object):
             "dbtable":"notUsed",
             "workdir":None,
             "main":None,
-            "command":"python"
+            "command":"python",
+            "njobs":-1
         }
 
         self._parse()
@@ -65,6 +66,10 @@ class CommandLineArgParser(object):
             raise ValueError("Working directory not given!")
         if ( self.arguments["dbname"] is None ):
             raise ValueError("Database not given!")
+        try:
+            n = int(self.arguments["njobs"] )
+        except:
+            raise TypeError("Number of jobs has to be an integer")
 
     def _parse_new_argument( self, arg ):
         try:
