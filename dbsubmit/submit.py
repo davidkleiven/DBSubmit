@@ -51,6 +51,7 @@ class Submit(object):
         else:
             maxjobs = self.args["njobs"]
         number_submitted = 0
+        print ("Starting maximum: %d jobs"%(maxjobs))
         for script,runID in zip(self.scriptnames,self.runIds):
             if ( number_submitted >= maxjobs ):
                 return
