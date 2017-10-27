@@ -45,6 +45,16 @@ class Submit(object):
 
     def submit( self ):
         self.generate()
+
+        if ( self.args["njobs"] == -1 ):
+            maxjobs = 100000
+        else:
+            maxjobs = int( self.args["njobs"] )
+        number_submitted = 0
+        print ("Starting maximum: %d jobs"%(maxjobs))
         for script,runID in zip(self.scriptnames,self.runIds):
+            if ( number_submitted >= maxjobs ):
+                return
             subprocess.call( ["qsub", script] )
             self.updateDB( runID )
+            number_submitted += 1

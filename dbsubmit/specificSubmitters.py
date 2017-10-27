@@ -10,7 +10,7 @@ class SimpleStatusFieldSubmit(Submit):
             "qeuedJob":"submitted",
             "finishedJob":"finished"
         }
-        
+
     def getJobIDs( self ):
         """
         Returns all job IDs of the new jobs
@@ -41,9 +41,13 @@ except ImportError:
     hasASE = False
 
 class ASEClusterExpansionSubmit(Submit):
-    """line
+    """
     Class that submits jobs susing ASE database in a similar way as the included Submit class
     https://gitlab.com/jinchang/ase/blob/ClusterExpansion/ase/ce/job.py
+
+    This submitter also can take a command line argument restart.
+    If --restart=True is given then also previously run jobs that ws not
+    converged will be started
     """
     def __init__( self, args ):
         Submit.__init__( self, args)
@@ -56,7 +60,14 @@ class ASEClusterExpansionSubmit(Submit):
             raise ImportError("Could not find ASE")
 
         db = ase.db.connect( self.args["dbname"] )
+
+        # Defautl condition is to run new jobs
         condition = "queued=False, started=False"
+
+        if ( "restart" in self.args.keys() ):
+            if ( self.args["restart"] == "True" ):
+                # Re-start an old simulation that was not converged
+                condition = "converged=False"
         ids = [row.id for row in db.select(condition)]
         return ids
 

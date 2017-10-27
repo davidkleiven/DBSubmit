@@ -5,7 +5,7 @@ from dbsubmit.specificSubmitters import ASEClusterExpansionSubmit
 
 def main( argv ):
     parser = CommandLineArgParser( argv )
-    submitter =ASEClusterExpansionSubmit( parser.arguments )
+    submitter = ASEClusterExpansionSubmit( parser.arguments )
     submitter.submit()
 
 if __name__ == "__main__":

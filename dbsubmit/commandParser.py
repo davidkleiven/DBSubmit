@@ -18,7 +18,8 @@ class CommandLineArgParser(object):
             "dbtable":"notUsed",
             "workdir":None,
             "main":None,
-            "command":"python"
+            "command":"python",
+            "njobs":-1
         }
 
         self._parse()
@@ -49,10 +50,13 @@ class CommandLineArgParser(object):
                 self.arguments["main"] = arg.split("--main=")[1]
             elif ( arg.find("--command=") != -1 ):
                 self.arguments["command"] = arg.split("--command=")[1]
-            elif ( arg.find("-h") or arg.find("--help") ):
+            elif ( arg.find("--help") != -1 ):
                 print ("Required arguments:")
                 print (self.arguments)
                 exit()
+            else:
+                # Not a default argument put it will be appended to the argumentlist
+                self._parse_new_argument( arg )
 
     def _checkRequired( self ):
         """
@@ -62,3 +66,24 @@ class CommandLineArgParser(object):
             raise ValueError("Working directory not given!")
         if ( self.arguments["dbname"] is None ):
             raise ValueError("Database not given!")
+        try:
+            n = int(self.arguments["njobs"] )
+        except:
+            raise TypeError("Number of jobs has to be an integer")
+
+    def _parse_new_argument( self, arg ):
+        try:
+            # Remove double dash in the beginning
+            arg = str(arg)
+            arg = arg.replace("--","")
+
+            # Split on the = sign
+            splitted = arg.split("=")
+
+            # Value before the = sign is the key and after is the value
+            key = splitted[0]
+            value = splitted[1]
+            self.arguments[key] = value
+        except Exception as exc:
+            print ("Failed in parsing non default argument")
+            print ( str(exc) )
