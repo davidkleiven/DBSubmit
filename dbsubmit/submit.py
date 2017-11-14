@@ -102,6 +102,13 @@ class Submit(object):
         for script,runID in zip(self.scriptnames,self.runIds):
             if ( number_submitted >= maxjobs ):
                 return
-            subprocess.call( ["qsub", script] )
+            command = ""
+            if ( settings.cluster == "vilje" ):
+                command = "qsub"
+            elif ( settings.cluster == "stallo" ):
+                command = "sbatch"
+            else:
+                raise ValueError("Unknown computing cluster!")
+            subprocess.call( [command, script] )
             self.updateDB( runID )
             number_submitted += 1

@@ -11,7 +11,7 @@ def check_args( args, accepted_args ):
 def generate_settings_file( args ):
     with open(settings_file, 'a') as of:
         for key,value in args.iteritems():
-            of.write("{}={}\n".format(key,value))
+            of.write("{}=\"{}\"\n".format(key,value))
     print ("Configuration options written to %s"%(settings_file))
 
 def main( argv ):
