@@ -28,8 +28,8 @@ def main( argv ):
             print ("Arguments:")
             print (args)
             return
-    elif ( arg.find("--cluster=") != -1 ):
-        args["cluster"] = arg.split("--cluster=")[1]
+        elif ( arg.find("--cluster=") != -1 ):
+            args["cluster"] = arg.split("--cluster=")[1]
 
     check_args( args, accepted_args )
     generate_settings_file(args)
