@@ -2,8 +2,10 @@ import datetime
 import subprocess
 try:
     import settings
-except:
+except ImportError:
     raise ImportError("Could not find settings file. You have to run the config script before installing the package.")
+finally:
+    raise Exception("Something is wrong in the settings file")
 
 class Submit(object):
     def __init__( self, arguments ):
@@ -55,9 +57,9 @@ class Submit(object):
         with open(scriptname, 'w') as of:
             of.write("#!/bin/bash\n")
             of.write("#SBATCH --job-name=%s\n"%(self.args["name"]) )
-            of.write("#SBATCH --ntasks=%d\n"%(self.args["nproc"]))
             of.write("#SBATCH --time=%s\n"%(walltime))
             of.write("#SBATCH --nodes=%d\n"%(self.args["nodes"]))
+            of.write("#SBATCH --ntasks-per-node=%d\n"%(self.args["nproc"]))
             of.write("#SBATCH --account=%s\n"%(self.args["projID"]))
             of.write("module purge\n")
             of.write("module load FFTW/3.3.6-intel-2016b\n")
