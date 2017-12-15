@@ -4,8 +4,6 @@ try:
     import settings
 except ImportError:
     raise ImportError("Could not find settings file. You have to run the config script before installing the package.")
-finally:
-    raise Exception("Something is wrong in the settings file")
 
 class Submit(object):
     def __init__( self, arguments ):
