@@ -87,6 +87,8 @@ class Submit(object):
                 self.generate_vilje( scriptname, runID )
             elif ( settings.cluster == "stallo" ):
                 self.generate_stallo( scriptname, runID )
+            elif( settings.cluster == "placeholder" ):
+                self.generate_stallo( scriptname, runID )
             else:
                 raise ValueError("Unknown computing cluster!")
 
@@ -107,6 +109,8 @@ class Submit(object):
                 command = "qsub"
             elif ( settings.cluster == "stallo" ):
                 command = "sbatch"
+            elif ( settings.cluster == "placeholder" ):
+                command = "bin/sbatch_placeholder"
             else:
                 raise ValueError("Unknown computing cluster!")
             subprocess.call( [command, script] )

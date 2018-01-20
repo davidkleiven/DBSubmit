@@ -11,3 +11,15 @@ There are two ways of passing command line arguments described in [here](gpawsub
 
 The script submittes all jobs that has status *new* and sets the STATUS field to *submitted*.
 It is a good idea to let the GPAW script setts the STATUS field to for instance *finished* when the job is finished.
+
+# Configuration
+The submission tool supports both PBS and SLURM. This is set via the configuration,
+and should be done *prior* to installation.
+To select *SLRUM* run
+```python
+python config.py --cluster=stallo
+```
+and to select *PBS* run
+```python
+python config.py --cluster=vilje
+```

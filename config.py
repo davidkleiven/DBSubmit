@@ -16,7 +16,7 @@ def generate_settings_file( args ):
 
 def main( argv ):
     accepted_args = {
-    "cluster":["stallo","vilje"]
+    "cluster":["stallo","vilje","placeholder"]
     }
 
     args = {

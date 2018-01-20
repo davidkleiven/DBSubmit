@@ -7,5 +7,5 @@ setup(
     atuhor_email="davidkleiven446@gmail.com",
     description="Scripts for submitting jobs to a cluster where input parameters are stored in a SQL database",
     packages=["dbsubmit"],
-    scripts=["bin/cesubmit.py","bin/simplesubmit.py"]
+    scripts=["bin/cesubmit.py","bin/simplesubmit.py","bin/sbatch_placeholder"]
 )

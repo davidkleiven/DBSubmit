@@ -4,4 +4,4 @@ build/*
 disubmit.egg-info/*
 dbsubmit.egg-info
 dist/*
-
+dbsubmit/settings.py

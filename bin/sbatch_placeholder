@@ -1,0 +1,3 @@
+#!/bin/bash
+# Empty file. Placeholder for the sbatch command
+echo "The placeholder for the sbatch command was called"
