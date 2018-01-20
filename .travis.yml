@@ -2,6 +2,7 @@ language: python
 
 before_script:
   python config.py --cluster=placeholder
+  python setup.py intall
 
 script:
   bash tests.sh
