@@ -1,5 +1,5 @@
 dbsubmit/*.pyc
-*.sh
+job*.sh
 build/*
 disubmit.egg-info/*
 dbsubmit.egg-info
