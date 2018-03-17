@@ -37,7 +37,7 @@ class Submit(object):
             of.write('export PYTHONPATH=${PYTHONPATH}:"/home/ntnu/davidkl/.local/lib/python2.7/site-packages/ase-3.15.0b1-py2.7.egg"\n')
             of.write('export PYTHONPATH=${PYTHONPATH}:"/home/ntnu/davidkl/.local/lib/python2.7/site-packages/"\n')
             of.write( "cd %s\n"%(self.args["workdir"]) )
-            of.write( "mpirun -np %d %s %s %d %s\n"%(self.args["nodes"]*self.args["nproc"], self.args["command"], self.args["main"], runID, self.arguments["args"]) )
+            of.write( "mpirun -np %d %s %s %d %s\n"%(self.args["nodes"]*self.args["nproc"], self.args["command"], self.args["main"], runID, self.args["args"]) )
 
     def generate_stallo( self, scriptname, runID ):
         """
