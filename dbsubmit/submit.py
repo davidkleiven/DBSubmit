@@ -69,7 +69,7 @@ class Submit(object):
             of.write('GPAW_SETUP_PATH="/home/davidkl/gpaw-setups-0.9.20000"\n')
             of.write("WORKDIR=%s\n"%(self.args["workdir"]))
             of.write("cd ${WORKDIR}\n")
-            of.write("mpirun -np $SLURM_NTASKS %s %s %d %s\n"%(self.args["command"],self.args["main"],runID,self.arguments["args"]))
+            of.write("mpirun -np $SLURM_NTASKS %s %s %d %s\n"%(self.args["command"],self.args["main"],runID,self.args["args"]))
 
     def generate( self ):
         """
