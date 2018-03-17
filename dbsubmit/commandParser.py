@@ -19,7 +19,8 @@ class CommandLineArgParser(object):
             "workdir":None,
             "main":None,
             "command":"python",
-            "njobs":-1
+            "njobs":-1,
+            "args":""
         }
 
         self._parse()
@@ -50,6 +51,9 @@ class CommandLineArgParser(object):
                 self.arguments["main"] = arg.split("--main=")[1]
             elif ( arg.find("--command=") != -1 ):
                 self.arguments["command"] = arg.split("--command=")[1]
+            elif ( arg.find("--args=") != -1 ):
+                arg = arg.split("--args=")[1]
+                self.arguments["args"] = arg.replace(","," ")
             elif ( arg.find("--help") != -1 ):
                 print ("Required arguments:")
                 print (self.arguments)
