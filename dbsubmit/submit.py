@@ -59,6 +59,7 @@ class Submit(object):
             of.write("#SBATCH --nodes=%d\n"%(self.args["nodes"]))
             of.write("#SBATCH --ntasks-per-node=%d\n"%(self.args["nproc"]))
             of.write("#SBATCH --account=%s\n"%(self.args["projID"]))
+            of.write("#SBATCH --mem=31000MB\n")
             of.write("module purge\n")
             of.write("module load FFTW/3.3.6-intel-2016b\n")
             of.write("module load intel/2016b\n")
