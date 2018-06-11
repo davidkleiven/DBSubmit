@@ -54,6 +54,8 @@ class CommandLineArgParser(object):
             elif ( arg.find("--args=") != -1 ):
                 arg = arg.split("--args=")[1]
                 self.arguments["args"] = arg.replace(","," ")
+            elif ( arg.find("--static=") != -1 ):
+                self.arguments["static"] = arg.split("--static=")[1]
             elif ( arg.find("--help") != -1 ):
                 print ("Required arguments:")
                 print (self.arguments)

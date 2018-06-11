@@ -72,6 +72,16 @@ class Submit(object):
             of.write("cd ${WORKDIR}\n")
             of.write("mpirun -np $SLURM_NTASKS %s %s %d %s\n"%(self.args["command"],self.args["main"],runID,self.args["args"]))
 
+    def paste_commands(self, outfile):
+        """
+        Tries to pase commands located in a separate text file
+        """
+        if "static" in self.args.keys():
+            with open(self.args["static"], 'r') as infile:
+                lines = infile.readlines()
+            for line in lines:
+                outfile.write(line)
+
     def generate( self ):
         """
         Generates the job script
