@@ -56,6 +56,8 @@ class CommandLineArgParser(object):
                 self.arguments["args"] = arg.replace(","," ")
             elif ( arg.find("--static=") != -1 ):
                 self.arguments["static"] = arg.split("--static=")[1]
+            elif (arg.find("--mem=") != -1 ):
+                self.arguments["mem"] = arg.split("--mem=")[1]
             elif ( arg.find("--help") != -1 ):
                 print ("Required arguments:")
                 print (self.arguments)

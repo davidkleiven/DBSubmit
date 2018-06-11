@@ -72,6 +72,59 @@ class Submit(object):
             of.write("cd ${WORKDIR}\n")
             of.write("mpirun -np $SLURM_NTASKS %s %s %d %s\n"%(self.args["command"],self.args["main"],runID,self.args["args"]))
 
+    def generate_idun( self, scriptname, runID ):
+        """
+        Generates a job script for Idun
+        """
+        walltime = self.args["walltime"]
+        split = walltime.split(":")
+        hours = int(split[0])
+        minutes = int(split[1])
+        sec = int(split[2])
+        days = int(hours/24)
+        hours = hours - 24*days
+        walltime = "%d-%d:%d:%d"%(days,hours,minutes,sec)
+
+        with open(scriptname, 'w') as of:
+            of.write("#!/bin/bash\n")
+            of.write("#SBATCH --job-name=%s\n"%(self.args["name"]) )
+            of.write("#SBATCH --time=%s\n"%(walltime))
+            of.write("#SBATCH --nodes=%d\n"%(self.args["nodes"]))
+            of.write("#SBATCH --ntasks-per-node=%d\n"%(self.args["nproc"]))
+            of.write("#SBATCH --mem=31000MB\n")
+            self.paste_commands(of)
+            of.write("mpirun -np $SLURM_NTASKS %s %s %d %s\n"%(self.args["command"],self.args["main"],runID,self.args["args"]))
+
+    def generate_slurm( self, scriptname, runID ):
+        """
+        Generate a submit script for SLURM queue
+        """
+        walltime = self.args["walltime"]
+        split = walltime.split(":")
+        hours = int(split[0])
+        minutes = int(split[1])
+        sec = int(split[2])
+        days = int(hours/24)
+        hours = hours - 24*days
+        walltime = "%d-%d:%d:%d"%(days,hours,minutes,sec)
+
+        with open(scriptname, 'w') as of:
+            of.write("#!/bin/bash\n")
+            if "name" in self.args.keys():
+                of.write("#SBATCH --job-name=%s\n"%(self.args["name"]) )
+            of.write("#SBATCH --time=%s\n"%(walltime))
+
+            if "nodes" in self.args.keys():
+                of.write("#SBATCH --nodes=%d\n"%(self.args["nodes"]))
+            if "nproc" in self.args.keys():
+                of.write("#SBATCH --ntasks-per-node=%d\n"%(self.args["nproc"]))
+            if "mem" in self.args.keys():
+                of.write("#SBATCH --mem={}MB\n".format(self.args["mem"]))
+            if "account" in self.args.keys():
+                of.write("#SBATCH --account=%s\n"%(self.args["projID"]))
+            self.paste_commands(of)
+            of.write("mpirun -np $SLURM_NTASKS %s %s %d %s\n"%(self.args["command"],self.args["main"],runID,self.args["args"]))
+
     def paste_commands(self, outfile):
         """
         Tries to pase commands located in a separate text file
@@ -100,6 +153,8 @@ class Submit(object):
                 self.generate_stallo( scriptname, runID )
             elif( settings.cluster == "placeholder" ):
                 self.generate_stallo( scriptname, runID )
+            elif (settings.cluster == "slurm" ):
+                self.generate_slurm( scriptname, runID )
             else:
                 raise ValueError("Unknown computing cluster!")
 
